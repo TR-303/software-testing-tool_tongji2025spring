@@ -1,7 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router';
 import Home from '../views/main/Home.vue';
-import TriangleCode from "../views/practice/triangle/TriangleCode.vue";
-import TriangleTest from "../views/practice/triangle/TriangleTest.vue";
+import Triangle from "../views/practice/Triangle.vue";
 
 
 const routes = [
@@ -17,36 +16,12 @@ const routes = [
             {
                 path: "triangle",
                 name: "判断三角形类型",
-                redirect: "/practice/triangle/code",
-                children: [
-                    {
-                        path: "code",
-                        name: "triangleCode",
-                        component: TriangleCode,
-                    },
-                    {
-                        path: "test",
-                        name: "triangleTest",
-                        component: TriangleTest,
-                    }
-                ],
+                component: Triangle
             },
             {
                 path: "calender",
                 name: "万年历问题",
-                redirect: "/practice/calender/code",
-                children: [
-                    {
-                        path: "code",
-                        name: "calenderCode",
-                        component: null,
-                    },
-                    {
-                        path: "test",
-                        name: "calenderTest",
-                        component: null,
-                    }
-                ]
+                component: null
             }
         ]
     },
