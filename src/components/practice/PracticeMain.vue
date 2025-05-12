@@ -90,7 +90,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="space-y-6">
+  <div class="flex flex-col space-y-6 h-full overflow-y-hidden">
     <!-- Control Panel -->
     <ControlPanel
         :versions="versions"
@@ -100,7 +100,7 @@ onMounted(async () => {
         @run="handleRun"
     />
 
-    <div class="flex border-b border-gray-300 m-0">
+    <div class="border-b border-gray-300 m-0">
       <button
           :class="[
           'px-4 py-2 font-semibold transition-all',
@@ -122,14 +122,16 @@ onMounted(async () => {
     </div>
 
     <!-- Sections -->
-    <transition name="fade" mode="out-in">
-      <div v-if="activeTab === 'code'" key="code">
-        <CodeSection ref="codeSectionRef" :description="currentDescription" :code="currentCode"/>
-      </div>
-      <div v-else-if="activeTab==='test'" key="test">
-        <TestSection :testcases="testcases" :results="results" />
-      </div>
-    </transition>
+    <div class="flex-1 overflow-y-scroll">
+      <transition name="fade" mode="out-in">
+        <div v-if="activeTab === 'code'" key="code">
+          <CodeSection ref="codeSectionRef" :description="currentDescription" :code="currentCode"/>
+        </div>
+        <div v-else-if="activeTab==='test'" key="test">
+          <TestSection :testcases="testcases" :results="results"/>
+        </div>
+      </transition>
+    </div>
   </div>
 </template>
 

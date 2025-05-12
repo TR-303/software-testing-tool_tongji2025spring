@@ -9,7 +9,6 @@ import SideBar from "./components/main/SideBar.vue";
 
     <!-- 右侧主内容区域 -->
     <div class="flex-1 bg-gray-100">
-      <!-- 在此处渲染主内容 -->
       <router-view/>
     </div>
   </div>
