@@ -1,0 +1,19 @@
+{
+  "triangle": {
+    "codes": [
+      {
+        "version": "1.0",
+        "description": "要判断三角形的形状，我们先。。。",
+        "code": "triangle_1.0.cpp"
+      }
+    ],
+    "tests": [
+      {
+        "method": "边界值测试",
+        "testcases": "triangle_test1.csv"
+      }
+    ]
+  },
+  "calender": {
+  }
+}
