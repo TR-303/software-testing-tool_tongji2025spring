@@ -3,13 +3,18 @@ import hljs from 'highlight.js';
 import 'highlight.js/styles/github.css';
 import {onMounted} from "vue";
 
+hljs.configure({
+  ignoreUnescapedHTML: true,
+})
+
 const {description, code} = defineProps({
   description: {type: String, required: true},
   code: {type: String, required: true},
 });
 
 const highlightCode = async () => {
-  if (!code) return;
+  if (code === '') return;
+  document.querySelectorAll('[data-highlighted]').forEach((el) => el.removeAttribute('data-highlighted'));
   hljs.highlightAll();
 }
 

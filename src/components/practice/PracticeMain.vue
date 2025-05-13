@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import {ref, onMounted} from 'vue';
 import ControlPanel from './ControlPanel.vue';
 import CodeSection from './CodeSection.vue';
@@ -6,7 +6,10 @@ import TestSection from './TestSection.vue';
 
 // 状态变量
 const activeTab = ref('code'); // 当前激活的标签
-const problemData = ref(null);
+const problemData = ref<{
+  codes: { version: string; description: string; code: string }[];
+  tests: { method: string; testcases: string }[];
+} | null>(null);
 const currentDescription = ref('');
 const currentCode = ref('');
 const versions = ref([]);
@@ -39,7 +42,7 @@ const loadProblemData = async () => {
 };
 
 // 更新代码和描述
-const updateCodeSection = async (version) => {
+const updateCodeSection = async (version: string) => {
   const codeData = problemData.value.codes.find((code) => code.version === version);
   if (codeData) {
     currentDescription.value = codeData.description;
@@ -49,12 +52,11 @@ const updateCodeSection = async (version) => {
 };
 
 // 加载测试用例
-const loadTestcases = async (testcaseFile) => {
+const loadTestcases = async (testcaseFile: string) => {
   const response = await fetch(`/test/${testcaseFile}`);
   const csvText = await response.text();
   const rows = csvText.trim().split('\n').map((row) => {
-    // 使用正则表达式正确解析 CSV 内容
-    return row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g).map((value) => value.replace(/^"|"$/g, ''));
+    return row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g).map((value) => value.trim().replace(/^"|"$/g, ''));
   });
   const headers = rows[0];
   testcases.value = rows.slice(1).map((row) => {
@@ -67,17 +69,28 @@ const loadTestcases = async (testcaseFile) => {
 };
 
 // 事件处理
-const handleVersionChange = (version) => {
+const handleVersionChange = (version: string) => {
   updateCodeSection(version);
 };
-const handleMethodChange = (method) => {
+const handleMethodChange = (method: string) => {
   const testData = problemData.value.tests.find((test) => test.method === method);
   if (testData) {
     loadTestcases(testData.testcases);
   }
 };
-const handleRun = () => {
-  console.log('运行按钮点击');
+const handleRun = async () => {
+  await fetch('http://localhost:5000/run_cpp', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      code: currentCode.value,
+      input: testcases.value[1].input,
+    }),
+  }).then(async res => {
+    console.log(await res.json());
+  });
 };
 
 // 初始化加载

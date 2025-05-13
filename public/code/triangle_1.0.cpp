@@ -17,7 +17,6 @@ void determineTriangleType(int a, int b, int c) {
 
 int main() {
     int a, b, c;
-    cout << "请输入三条边长度: ";
     cin >> a >> b >> c;
     determineTriangleType(a, b, c);
     return 0;
