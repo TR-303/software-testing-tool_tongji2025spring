@@ -16,7 +16,6 @@ const versions = ref([]);
 const testMethods = ref([]);
 const testcases = ref([]);
 const results = ref([]);
-const inputs = ref([]); // 用于存储测试用例的输入
 
 // 引用 CodeSection 组件
 const codeSectionRef = ref();
@@ -71,16 +70,18 @@ const loadTestcases = async (testcaseFile: string) => {
 
 // 事件处理
 const handleVersionChange = (version: string) => {
+  results.value = [];
   updateCodeSection(version);
 };
 const handleMethodChange = (method: string) => {
+  results.value = [];
   const testData = problemData.value.tests.find((test) => test.method === method);
   if (testData) {
     loadTestcases(testData.testcases);
   }
 };
 const handleRun = async () => {
-  inputs.value = testcases.value.map((testcase) => testcase.input);
+  const inputs = testcases.value.map((testcase) => testcase.input);
   console.log('inputs:', inputs.value);
   await fetch('http://localhost:5001/run_cpp', {
     method: 'POST',
@@ -89,7 +90,7 @@ const handleRun = async () => {
     },
     body: JSON.stringify({
       code: currentCode.value,
-      inputs: inputs.value,
+      inputs: inputs,
     }),
   }).then(async res => {
     if (!res.ok) {
