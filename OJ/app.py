@@ -37,7 +37,7 @@ def run_cpp():
 
             # 编译
             compile_result = subprocess.run(
-                ['g++', cpp_file, '-o', exe_file],
+                f"g++ {cpp_file} -o {exe_file}",
                 stderr=subprocess.PIPE,
                 stdout=subprocess.PIPE,
                 timeout=3,
@@ -59,7 +59,7 @@ def run_cpp():
 
             # 运行
             process = subprocess.run(
-                [exe_file],
+                exe_file,
                 input=input_data.encode('utf-8'),
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
@@ -93,4 +93,4 @@ if __name__ == '__main__':
     # 确保临时目录存在
     if not os.path.exists(TEMP_DIR):
         os.makedirs(TEMP_DIR)
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5001, debug=True)
