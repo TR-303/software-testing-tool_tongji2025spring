@@ -135,7 +135,7 @@ onMounted(async () => {
     </div>
 
     <!-- Sections -->
-    <div class="flex-1 overflow-y-scroll">
+    <div class="flex-1">
       <transition name="fade" mode="out-in">
         <div v-if="activeTab === 'code'" key="code">
           <CodeSection ref="codeSectionRef" :description="currentDescription" :code="currentCode"/>

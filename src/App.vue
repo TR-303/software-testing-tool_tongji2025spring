@@ -8,7 +8,7 @@ import SideBar from "./components/main/SideBar.vue";
     <SideBar/>
 
     <!-- 右侧主内容区域 -->
-    <div class="flex-1 bg-gray-100">
+    <div class="flex-1 bg-gray-100 h-screen overflow-y-auto">
       <router-view/>
     </div>
   </div>
