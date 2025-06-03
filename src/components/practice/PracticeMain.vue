@@ -92,7 +92,21 @@ const handleRun = async () => {
       inputs: inputs.value,
     }),
   }).then(async res => {
-    console.log(await res.json());
+    if (!res.ok) {
+      const errorData = await res.json();
+      console.error('Error:', errorData);
+      alert(`运行错误: ${errorData.message}`);
+      return;
+    }
+    const data = await res.json();
+    const outputs = data.outputs;
+    results.value = testcases.value.map((testcase, idx) => ({
+      ...testcase,
+      actual: outputs[idx],
+      passed: outputs[idx] === testcase.expected
+    }));
+    console.log('results:', results.value);
+    activeTab.value = 'test'; // 切换到测试结果标签
   });
 };
 

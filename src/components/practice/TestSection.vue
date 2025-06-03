@@ -2,7 +2,7 @@
 import {computed} from 'vue';
 
 // 接收 props
-const {testcases, results} = defineProps({
+const props = defineProps({
   testcases: {
     type: Array,
     required: true,
@@ -13,6 +13,20 @@ const {testcases, results} = defineProps({
     default: null,
   },
 });
+
+// 监听 props 变化并打印
+import { watch } from 'vue';
+
+watch(
+  () => props,
+  (newVal, oldVal) => {
+    console.log('Props changed:', newVal);
+  },
+  { deep: true, immediate: true }
+);
+
+const testcases = props.testcases;
+const results = props.results;
 
 // 计算通过数和用例数
 const totalCases = computed(() => testcases.length);
