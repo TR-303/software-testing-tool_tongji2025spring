@@ -16,6 +16,7 @@ const versions = ref([]);
 const testMethods = ref([]);
 const testcases = ref([]);
 const results = ref([]);
+const inputs = ref([]); // 用于存储测试用例的输入
 
 // 引用 CodeSection 组件
 const codeSectionRef = ref();
@@ -79,6 +80,8 @@ const handleMethodChange = (method: string) => {
   }
 };
 const handleRun = async () => {
+  inputs.value = testcases.value.map((testcase) => testcase.input);
+  console.log('inputs:', inputs.value);
   await fetch('http://localhost:5001/run_cpp', {
     method: 'POST',
     headers: {
@@ -86,7 +89,7 @@ const handleRun = async () => {
     },
     body: JSON.stringify({
       code: currentCode.value,
-      input: testcases.value[1].input,
+      inputs: inputs.value,
     }),
   }).then(async res => {
     console.log(await res.json());

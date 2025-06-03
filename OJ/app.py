@@ -17,10 +17,11 @@ os.makedirs(TEMP_DIR, exist_ok=True)  # 确保目录存在
 def run_cpp():
     data = request.json
     code = data.get('code', '')
-    input_data = data.get('input', '')
+    inputs = data.get('inputs', '')
+    outputs = []
 
     print(code)
-    print(input_data)
+    print(inputs)
 
     if not code:
         return jsonify({'error': 'No code provided'}), 400
@@ -56,25 +57,32 @@ def run_cpp():
                     'error': 'Compilation failed',
                     'message': compile_result.stderr
                 }), 400
+            
+            for input in inputs:
+                if not input.strip():
+                    print("shouldn't reach here 输入有空行！")
+                    continue
+                
+                # 运行
+                process = subprocess.run(
+                    exe_file,
+                    input=input.encode('utf-8'),
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    timeout=3,
+                    shell=True
+                )
 
-            # 运行
-            process = subprocess.run(
-                exe_file,
-                input=input_data.encode('utf-8'),
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                timeout=3,
-                shell=True
-            )
-
-            if process.returncode != 0:
-                return jsonify({
-                    'error': 'Runtime error',
-                    'message': process.stderr.decode('utf-8', errors='replace')
-                }), 400
+                if process.returncode != 0:
+                    return jsonify({
+                        'error': 'Runtime error',
+                        'message': process.stderr.decode('utf-8', errors='replace')
+                    }), 400
+            
+                outputs.append(process.stdout.decode('utf-8', errors='replace').rstrip('\r\n'))
 
             return jsonify({
-                'output': process.stdout.decode('utf-8', errors='replace').rstrip('\r\n')
+                'outputs': outputs
             })
 
         except subprocess.TimeoutExpired:
