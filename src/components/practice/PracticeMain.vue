@@ -101,7 +101,6 @@ const handleRun = async () => {
     const data = await res.json();
     const outputs = data.outputs;
     results.value = testcases.value.map((testcase, idx) => ({
-      ...testcase,
       actual: outputs[idx],
       passed: outputs[idx] === testcase.expected
     }));

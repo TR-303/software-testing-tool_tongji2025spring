@@ -15,7 +15,7 @@ const props = defineProps({
 });
 
 // 监听 props 变化并打印
-import { watch } from 'vue';
+import { watch,toRefs } from 'vue';
 
 watch(
   () => props,
@@ -25,19 +25,18 @@ watch(
   { deep: true, immediate: true }
 );
 
-const testcases = props.testcases;
-const results = props.results;
+const { testcases, results } = toRefs(props);
 
 // 计算通过数和用例数
-const totalCases = computed(() => testcases.length);
+const totalCases = computed(() => testcases.value.length);
 const passedCases = computed(() =>
-    results?.length > 0 ? results.filter((result) => result.passed).length : '-'
+    results?.value.length > 0 ? results.value.filter((result) => result.passed).length : '-'
 );
 
 // 获取表头
 const headers = computed(() => {
-  if (testcases.length > 0) {
-    return Object.keys(testcases[0]);
+  if (testcases.value.length > 0) {
+    return Object.keys(testcases.value[0]);
   }
   return [];
 });
