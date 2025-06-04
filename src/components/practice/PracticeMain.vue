@@ -3,6 +3,7 @@ import {ref, onMounted} from 'vue';
 import ControlPanel from './ControlPanel.vue';
 import CodeSection from './CodeSection.vue';
 import TestSection from './TestSection.vue';
+import DataStatistics from './DataStatistics.vue';
 
 // 状态变量
 const activeTab = ref('code'); // 当前激活的标签
@@ -149,6 +150,15 @@ onMounted(async () => {
       >
         测试结果
       </button>
+      <button
+          :class="[
+          'px-4 py-2 font-semibold transition-all',
+          activeTab === 'stats' ? 'text-black border-b-2 border-black' : 'text-gray-500 hover:text-black'
+        ]"
+          @click="activeTab = 'stats'"
+      >
+        数据统计
+      </button>
     </div>
 
     <!-- Sections -->
@@ -159,6 +169,9 @@ onMounted(async () => {
         </div>
         <div v-else-if="activeTab==='test'" key="test">
           <TestSection :testcases="testcases" :results="results"/>
+        </div>
+        <div v-else-if="activeTab==='stats'" key="stats">
+          <DataStatistics :results="results" :totalCases="testcases.length" />
         </div>
       </transition>
     </div>

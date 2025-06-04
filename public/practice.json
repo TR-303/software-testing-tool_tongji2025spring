@@ -15,5 +15,19 @@
     ]
   },
   "calender": {
+  },
+  "telefee": {
+    "codes": [
+      {
+        "version": "1.0",
+        "description": "首先根据用户输入的本月通话分钟数，将其划分到不同的区间，从而确定该区间对应的最大容许未按时缴费次数和初始折扣率；接着将用户实际的未按时缴费次数与允许值进行比较，如果超出则取消折扣；然后按照\"通话分钟数×0.15 元/分钟\"计算实际通话费，并在此基础上根据折扣率计算折扣后通话费；最后将固定的基本月租费 25 元与折扣后通话费相加，得到当月总费用并输出。",
+        "code": "telefee_1.0.cpp"
+      }
+    ],
+    "tests": [
+      { "method": "边界值分析", "testcases": "telefee_boundary.csv" },
+      { "method": "等价类划分", "testcases": "telefee_equivalence.csv" },
+      { "method": "决策表设计", "testcases": "telefee_decision.csv" }
+    ]
   }
 }

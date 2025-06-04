@@ -2,6 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router';
 import Home from '../views/main/Home.vue';
 import Triangle from "../views/practice/Triangle.vue";
 import WhiteBox from "../views/practice/WhiteBox.vue";
+import TeleFee from "../views/practice/TeleFee.vue";
 
 const routes = [
     {
@@ -27,6 +28,11 @@ const routes = [
                 path: "whitebox",
                 name: "白盒测试",
                 component: WhiteBox
+            },
+            {
+                path: "telefee",
+                name: "电信收费",
+                component: TeleFee
             },
         ]
     },
