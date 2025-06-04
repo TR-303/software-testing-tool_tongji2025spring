@@ -24,7 +24,7 @@ import PracticeMain from "@/components/practice/PracticeMain.vue";
 
     </div>
   </div>
-  <practice-main problem-key="sales-commission"/>
+  <practice-main problem-key="whitebox"/>
 </template>
 
 <style scoped>

@@ -29,5 +29,46 @@
       { "method": "等价类划分", "testcases": "telefee_equivalence.csv" },
       { "method": "决策表设计", "testcases": "telefee_decision.csv" }
     ]
+  },
+  "whitebox": {
+    "codes": [
+      {
+        "version": "1.0",
+        "description": "要计算提成，我们先。。。",
+        "code": "whitebox_1.0.cpp"
+      },
+      {
+        "version": "2.0",
+        "description": "要计算提成，我们先。。。",
+        "code": "whitebox_2.0.cpp"
+      },
+      {
+        "version": "3.0",
+        "description": "要计算提成，我们先。。。",
+        "code": "whitebox_3.0.cpp"
+      }
+    ],
+    "tests": [
+      {
+        "method": "语句覆盖",
+        "testcases": "whitebox_Statement.csv"
+      },
+            {
+        "method": "判断覆盖",
+        "testcases": "whitebox_Decision.csv"
+      },
+            {
+        "method": "条件覆盖",
+        "testcases": "whitebox_Condition.csv"
+      },
+            {
+        "method": "判断—条件覆盖",
+        "testcases": "whitebox_DC.csv"
+      },
+            {
+        "method": "条件组合覆盖",
+        "testcases": "whitebox_Multiple.csv"
+      }
+    ]
   }
 }
