@@ -29,7 +29,7 @@ defineExpose({highlightCode});
     <p class="mt-2 text-gray-700">{{ description }}</p>
     <hr class="my-4 border-gray-300"/>
     <h2 class="text-lg font-semibold text-gray-800">代码</h2>
-    <pre class="bg-gray-100 text-sm text-gray-900 overflow-auto max-h-130">
+    <pre class="bg-gray-100 text-sm text-gray-900">
       <code class="language-cpp">{{ code }}</code>
     </pre>
   </div>

@@ -121,7 +121,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="flex flex-col space-y-6 h-full overflow-y-hidden">
+  <div class="flex flex-col space-y-6 h-full">
     <!-- Control Panel -->
     <ControlPanel
         :versions="versions"
