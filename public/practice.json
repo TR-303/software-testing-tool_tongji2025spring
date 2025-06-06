@@ -15,6 +15,27 @@
     ]
   },
   "calender": {
+    "codes": [
+      {
+        "version": "1.0",
+        "description": "首先判断用户输入的年月日是否合法，时间是否在业务规定的范围内，接着计算输入日期的下一天，最后以xxxx年xx月xx日的格式输出下一天的日期。",
+        "code": "calender_1.0.cpp"
+      }
+    ],
+    "tests": [
+      {
+        "method": "边界值分析",
+        "testcases": "calender_boundary.csv"
+      },
+      {
+        "method": "等价类划分",
+        "testcases": "calender_equivalence.csv"
+      },
+      {
+        "method": "决策表设计",
+        "testcases": "calender_decision.csv"
+      }
+    ]
   },
   "telefee": {
     "codes": [

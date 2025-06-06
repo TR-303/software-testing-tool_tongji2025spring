@@ -3,6 +3,7 @@ import Home from '../views/main/Home.vue';
 import Triangle from "../views/practice/Triangle.vue";
 import WhiteBox from "../views/practice/WhiteBox.vue";
 import TeleFee from "../views/practice/TeleFee.vue";
+import Calender from "@/views/practice/Calender.vue";
 
 const routes = [
     {
@@ -22,7 +23,7 @@ const routes = [
             {
                 path: "calender",
                 name: "万年历问题",
-                component: null
+                component: Calender
             },
             {
                 path: "whitebox",
