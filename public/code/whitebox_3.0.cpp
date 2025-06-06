@@ -8,6 +8,12 @@ using namespace std;
 
 // 佣金计算函数
 double calculateCommission(double sales, int leaveDays, double cashRatio, int& commissionFactor) {
+    // 检查是否有任何输入为负数
+    if (sales < 0 || leaveDays < 0 || cashRatio < 0) {
+        commissionFactor = -1;
+        return -1.0;
+    }
+    
     if (sales > 200.0 && leaveDays <= 10 && cashRatio >= 60.0) {
         commissionFactor = 7;
         return sales / 7.0;
@@ -35,8 +41,10 @@ int main() {
     int factor;
     double commission = calculateCommission(sales, leaveDays, cashRatio, factor);
 
-    // 判断是否为整数（误差范围内）
-    if (fabs(commission - static_cast<int>(commission)) < 1e-6) {
+    // 输出结果处理
+    if (commission == -1.0) {
+        cout << -1 << endl;
+    } else if (fabs(commission - static_cast<int>(commission)) < 1e-6) {
         cout << static_cast<int>(commission) << endl;
     } else {
         cout << fixed << setprecision(3) << commission << endl;
