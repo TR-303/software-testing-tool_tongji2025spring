@@ -53,6 +53,8 @@ int main() {
     // 计算当月总费用
     double totalFee = BASE_FEE + discountedCallFee;
 
-    cout << totalFee;
+    //cout << totalFee;    
+    // 输出结果，保留两位小数。上面一句是错误的输出方式，应该使用iomanip来格式化输出
+    cout << fixed << setprecision(2) << totalFee;
     return 0;
 }
