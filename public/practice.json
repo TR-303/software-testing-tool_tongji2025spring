@@ -3,15 +3,25 @@
     "codes": [
       {
         "version": "1.0",
-        "description": "要判断三角形的形状，我们先。。。",
+        "description": "该版本程序在检验输入合法性后，先判断能否构成三角形，之后判断等腰三角形，再判断等边三角形和普通三角形。由于先判断等腰而后判断等边，会错误地将等边三角形的输入判断为等腰三角形。",
         "code": "triangle_1.0.cpp"
+      },
+      {
+        "version": "2.0",
+        "description": "该版本程序修复了1.0版本中等边判断错误的问题。",
+        "code": "triangle_2.0.cpp"
       }
     ],
     "tests": [
       {
-        "method": "边界值测试",
-        "testcases": "triangle_test1.csv"
+        "method": "基本边界值",
+        "testcases": "triangle_basic_boundary.csv"
+      },
+            {
+        "method": "健壮边界值",
+        "testcases": "triangle_robust_boundary.csv"
       }
+            
     ]
   },
   "calender": {
