@@ -13,6 +13,16 @@ int main() {
     int lateCount;
     cin >> minutes;
     cin >> lateCount;
+    if(minutes<0|| minutes>43200)
+    {
+        cout<<"通话分钟数不合法";
+        return 0;
+    }
+    if(lateCount<0)
+    {
+        cout<<"未按时缴费次数不合法";
+        return 0;
+    }
 
     // 确定对应的折扣率（以百分比形式）和最大容许未按时缴费次数
     double discountRate = 0.0; // 折扣率，若无折扣则为0
