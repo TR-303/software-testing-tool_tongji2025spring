@@ -9,8 +9,9 @@ const routes = router.options.routes;
 const isPracticeOpen = ref(false);
 const isProjectOpen = ref(false);
 
-// 获取课程练习的子路由
+// 获取课程练习和项目测试的子路由
 const practiceRoutes = routes.find(route => route.name === "课程练习")?.children || [];
+const projectRoutes = routes.find(route => route.name === "项目测试")?.children || [];
 
 // 跳转到指定路由
 const navigateTo = (path) => {
@@ -59,7 +60,16 @@ const navigateTo = (path) => {
         <span>{{ isProjectOpen ? '▲' : '▼' }}</span>
       </button>
       <div v-if="isProjectOpen" class="pl-6">
-        <p class="text-gray-400">暂无内容</p>
+        <ul>
+          <li
+              v-for="route in projectRoutes"
+              :key="route.path"
+              class="py-2 px-2 rounded-md cursor-pointer hover:bg-gray-700 hover:text-white transition"
+              @click="navigateTo(`/project/${route.path}`)"
+          >
+            <span>{{ route.name }}</span>
+          </li>
+        </ul>
       </div>
     </div>
   </div>

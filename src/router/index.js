@@ -4,6 +4,7 @@ import Triangle from "../views/practice/Triangle.vue";
 import WhiteBox from "../views/practice/WhiteBox.vue";
 import TeleFee from "../views/practice/TeleFee.vue";
 import Calender from "@/views/practice/Calender.vue";
+import UnitTest from "@/views/project/UnitTest.vue";
 
 const routes = [
     {
@@ -40,7 +41,13 @@ const routes = [
     {
         path: "/project",
         name: "项目测试",
-        children: []
+        children: [
+            {
+                path: "unit",
+                name: "单元测试",
+                component: UnitTest
+            }
+        ]
     }
 ];
 
