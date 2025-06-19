@@ -97,6 +97,21 @@ def run_cpp():
             }), 500
 
 
+@app.route('/run_tests', methods=['POST'])
+def run_tests():
+    try:
+        result = subprocess.run([
+            'mvn', 'test'
+        ], cwd=os.path.join(os.path.dirname(__file__), '..', '..', 'chai-grouping-backend'),
+                           stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        return jsonify({
+            'exitCode': result.returncode,
+            'output': result.stdout
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
 if __name__ == '__main__':
     # 确保临时目录存在
     if not os.path.exists(TEMP_DIR):
