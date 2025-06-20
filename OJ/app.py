@@ -2,6 +2,7 @@ import os
 import subprocess
 import tempfile
 import traceback
+import xml.etree.ElementTree as ET
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
@@ -120,9 +121,31 @@ def run_tests():
             stderr=subprocess.STDOUT,
             text=True
         )
+
+        passed = []
+        failed = []
+        report_dir = os.path.join(backend_dir, 'target', 'surefire-reports')
+        if os.path.isdir(report_dir):
+            for file in os.listdir(report_dir):
+                if file.startswith('TEST-') and file.endswith('.xml'):
+                    path = os.path.join(report_dir, file)
+                    try:
+                        tree = ET.parse(path)
+                        root = tree.getroot()
+                        for case in root.findall('testcase'):
+                            name = f"{case.get('classname')}.{case.get('name')}"
+                            if case.find('failure') is not None or case.find('error') is not None:
+                                failed.append(name)
+                            else:
+                                passed.append(name)
+                    except Exception:
+                        pass
+
         return jsonify({
             'exitCode': result.returncode,
-            'output': result.stdout
+            'output': result.stdout,
+            'passed': passed,
+            'failed': failed
         })
     except Exception as e:
         app.logger.error("运行测试时报错:\n" + traceback.format_exc())

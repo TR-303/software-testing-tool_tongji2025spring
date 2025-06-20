@@ -4,7 +4,6 @@ import Triangle from "../views/practice/Triangle.vue";
 import WhiteBox from "../views/practice/WhiteBox.vue";
 import TeleFee from "../views/practice/TeleFee.vue";
 import Calender from "@/views/practice/Calender.vue";
-import UnitTest from "@/views/project/UnitTest.vue";
 import BackendTests from "@/views/project/BackendTests.vue";
 
 const routes = [
@@ -46,11 +45,6 @@ const routes = [
             {
                 path: "unit",
                 name: "单元测试",
-                component: UnitTest
-            },
-            {
-                path: "backend",
-                name: "后端单元测试",
                 component: BackendTests
             }
         ]
