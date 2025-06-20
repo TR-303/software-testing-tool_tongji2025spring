@@ -1,0 +1,16 @@
+[
+  {
+    "desc": "参数合法，全部字段有效，期望200，成功更新用户个人简介",
+    "method": "PUT",
+    "url": "/api/user/resume",
+    "headers": {},
+    "token_type": "valid",
+    "body": {
+      "school": "同济大学",
+      "grade": "大三",
+      "skill_description": "前端开发"
+    },
+    "expected_status": 200,
+    "expected_message": "简历更新成功"
+  }
+]

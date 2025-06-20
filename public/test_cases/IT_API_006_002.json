@@ -1,0 +1,12 @@
+[
+  {
+    "desc": "当前用户不是组长，期望400，提示无权限解散该小组",
+    "method": "DELETE",
+    "url": "/api/groups/1",
+    "headers": {},
+    "token_type": "valid",
+    "user_id": 2,
+    "expected_status": 400,
+    "expected_message": "无权限解散该小组"
+  }
+]

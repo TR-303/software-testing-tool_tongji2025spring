@@ -1,0 +1,44 @@
+[
+  {
+    "desc": "特定参数为空，skillDescription为空，期望400，提示缺少字段",
+    "method": "PUT",
+    "url": "/api/user/resume",
+    "headers": {},
+    "token_type": "valid",
+    "body": {
+      "school": "同济大学",
+      "grade": "大三",
+      "skillDescription": ""
+    },
+    "expected_status": 400,
+    "expected_message": "缺少字段"
+  },
+  {
+    "desc": "特定参数为空，grade为空，期望400，提示缺少字段",
+    "method": "PUT",
+    "url": "/api/user/resume",
+    "headers": {},
+    "token_type": "valid",
+    "body": {
+      "school": "同济大学",
+      "grade": "",
+      "skillDescription": "前端开发"
+    },
+    "expected_status": 400,
+    "expected_message": "缺少字段"
+  },
+  {
+    "desc": "特定参数为空，school为空，期望400，提示缺少字段",
+    "method": "PUT",
+    "url": "/api/user/resume",
+    "headers": {},
+    "token_type": "valid",
+    "body": {
+      "school": "",
+      "grade": "大三",
+      "skillDescription": "前端开发"
+    },
+    "expected_status": 400,
+    "expected_message": "缺少字段"
+  }
+]

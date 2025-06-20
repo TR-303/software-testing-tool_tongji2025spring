@@ -1,0 +1,82 @@
+[
+  {
+    "desc": "name为空，其他字段正常，期望400，提示字段不能为空",
+    "method": "POST",
+    "url": "/api/groups",
+    "headers": {},
+    "token_type": "valid",
+    "body": {
+      "name": "",
+      "description": "desc1",
+      "volume": 10,
+      "visibility": 1,
+      "approvalRequired": 0
+    },
+    "expected_status": 400,
+    "expected_message": "字段不能为空"
+  },
+  {
+    "desc": "description为null，其他字段正常，期望400，提示字段不能为空",
+    "method": "POST",
+    "url": "/api/groups",
+    "headers": {},
+    "token_type": "valid",
+    "body": {
+      "name": "GroupA",
+      "description": null,
+      "volume": 10,
+      "visibility": 1,
+      "approvalRequired": 0
+    },
+    "expected_status": 400,
+    "expected_message": "字段不能为空"
+  },
+  {
+    "desc": "volume为null，其他字段正常，期望400，提示字段不能为空",
+    "method": "POST",
+    "url": "/api/groups",
+    "headers": {},
+    "token_type": "valid",
+    "body": {
+      "name": "GroupA",
+      "description": "desc1",
+      "volume": null,
+      "visibility": 1,
+      "approvalRequired": 0
+    },
+    "expected_status": 400,
+    "expected_message": "字段不能为空"
+  },
+  {
+    "desc": "visibility为null，其他字段正常，期望400，提示字段不能为空",
+    "method": "POST",
+    "url": "/api/groups",
+    "headers": {},
+    "token_type": "valid",
+    "body": {
+      "name": "GroupA",
+      "description": "desc1",
+      "volume": 10,
+      "visibility": null,
+      "approvalRequired": 0
+    },
+    "expected_status": 400,
+    "expected_message": "字段不能为空"
+  },
+  {
+    "desc": "approvalRequired为null，其他字段正常，期望400，提示字段不能为空",
+    "method": "POST",
+    "url": "/api/groups",
+    "headers": {},
+    "token_type": "valid",
+    "body": {
+      "name": "GroupA",
+      "description": "desc1",
+      "volume": 10,
+      "visibility": 1,
+      "approvalRequired": null
+    },
+    "expected_status": 400,
+    "expected_message": "字段不能为空"
+  }
+]

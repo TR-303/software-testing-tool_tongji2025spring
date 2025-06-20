@@ -1,0 +1,33 @@
+[
+  {
+    "group": 1,
+    "name": "Gp1",
+    "description": "Desc1",
+    "creation_date": "2000-01-01",
+    "volume": 10,
+    "visibility": 1,
+    "approval_required": 1,
+    "leader_id": 1
+  },
+  {
+    "group": 2,
+    "name": "Gp1",
+    "description": "Desc2",
+    "creation_date": "2000-01-01",
+    "volume": 10,
+    "visibility": 1,
+    "approval_required": 1,
+    "leader_id": 2
+  },
+  {
+    "group": 1001,
+    "name": "Gp_disbanded",
+    "description": "CANNOT JOIN",
+    "volume": 10,
+    "creation_date": "2000-01-01",
+    "visibility": 0,
+    "approval_required": 1,
+    "leader_id": 1,
+    "disbanded": 1
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "desc": "带正确token，获取用户信息",
+    "method": "GET",
+    "url": "/api/user/profile",
+    "headers": {},
+    "token_type": "valid",
+    "expected_status": 200
+  }
+]

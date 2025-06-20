@@ -1,0 +1,12 @@
+[
+  {
+    "desc": "组长正常解散小组，期望200，返回成功",
+    "method": "DELETE",
+    "url": "/api/groups/1",
+    "headers": {},
+    "token_type": "valid",
+    "user_id": 1,
+    "expected_status": 200,
+    "expected_message": "小组已解散"
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "desc": "groupId为-1，期望400，提示groupId非法",
+    "method": "DELETE",
+    "url": "/api/groups/-1",
+    "headers": {},
+    "token_type": "valid",
+    "user_id": 1,
+    "expected_status": 400,
+    "expected_message": "groupId非法"
+  },
+  {
+    "desc": "groupId为null，期望400，提示groupId非法",
+    "method": "DELETE",
+    "url": "/api/groups/null",
+    "headers": {},
+    "token_type": "valid",
+    "user_id": 1,
+    "expected_status": 400,
+    "expected_message": "groupId非法"
+  }
+]

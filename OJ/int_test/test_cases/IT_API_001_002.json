@@ -1,0 +1,16 @@
+[
+  {
+    "desc": "年级参数不合法，grade=abcd，期望400，提示字段非法",
+    "method": "PUT",
+    "url": "/api/user/resume",
+    "headers": {},
+    "token_type": "valid",
+    "body": {
+      "school": "同济大学",
+      "grade": "abcd",
+      "skillDescription": "后端开发"
+    },
+    "expected_status": 400,
+    "expected_message": "字段非法"
+  }
+]

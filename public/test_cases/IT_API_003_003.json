@@ -1,0 +1,18 @@
+[
+  {
+    "desc": "所有字段合法，期望200，成功创建小组",
+    "method": "POST",
+    "url": "/api/groups",
+    "headers": {},
+    "token_type": "valid",
+    "body": {
+      "name": "GroupA",
+      "description": "描述A",
+      "volume": 10,
+      "visibility": 1,
+      "approval_required": 0
+    },
+    "expected_status": 200,
+    "expected_message": "成功创建小组"
+  }
+]

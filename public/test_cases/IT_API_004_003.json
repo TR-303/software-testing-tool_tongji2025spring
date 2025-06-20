@@ -1,0 +1,15 @@
+[
+  {
+    "desc": "description为null，期望400，提示description不能为空",
+    "method": "POST",
+    "url": "/api/groups/2/apply",
+    "headers": {},
+    "token_type": "valid",
+    "user_id": 1,
+    "body": {
+      "description": null
+    },
+    "expected_status": 400,
+    "expected_message": "description不能为空"
+  }
+]

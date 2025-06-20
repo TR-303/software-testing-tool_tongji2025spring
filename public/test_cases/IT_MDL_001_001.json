@@ -1,0 +1,17 @@
+[
+  {
+    "desc": "不带token，获取用户信息",
+    "method": "GET",
+    "url": "/api/user/profile",
+    "headers": {},
+    "expected_status": 401
+  },
+  {
+    "desc": "带已过期token，获取用户信息",
+    "method": "GET",
+    "url": "/api/user/profile",
+    "headers": {},
+    "token_type": "expired",
+    "expected_status": 401
+  }
+]

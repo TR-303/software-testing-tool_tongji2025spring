@@ -216,6 +216,43 @@ def run_systest():
 
     return Response(stream_with_context(generate()), mimetype='text/event-stream')
 
+@app.route('/run_inttest', methods=['GET'])
+def run_inttest():
+    testcase_id = request.args.get('case_id')
+    headed = request.args.get('headed', 'false').lower() == 'true'
+
+    if not testcase_id:
+        return jsonify({'error': 'Missing case_id parameter'}), 400
+    from int_test.single_test import run_cases
+    # from int_test.db_preparations import clear_database, insert_users,insert_memberships,insert_test_group
+    from int_test.config import CASES_DIR
+
+    # clear_database()    
+    # insert_users()
+    # insert_test_group()
+    # insert_memberships()
+
+    ret = run_cases(
+        os.path.join(CASES_DIR, f"{testcase_id}.json")
+    )
+
+    if not ret:
+        return jsonify({'error': 'Test case not found'}), 404
+
+    return jsonify(ret)
+
+@app.route('/prepare_db', methods=['POST'])
+def prepare_db():
+    """
+    初始化数据库，插入测试用户、测试小组、测试成员。
+    """
+    from int_test.db_preparations import clear_database, insert_users, insert_test_group, insert_memberships
+    clear_database()
+    insert_users()
+    insert_test_group()
+    insert_memberships()
+    return jsonify({"message": "数据库准备完成"})
+
 
 if __name__ == '__main__':
     # 确保临时目录存在

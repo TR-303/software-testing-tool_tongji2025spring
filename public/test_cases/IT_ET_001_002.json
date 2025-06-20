@@ -1,0 +1,12 @@
+[
+  {
+    "desc": "有可用组，AI正常推荐，期望返回推荐列表",
+    "method": "POST",
+    "url": "/api/groups/match",
+    "headers": {},
+    "token_type": "valid",
+    "user_id": 2,
+    "expected_status": 200,
+    "expected_message": "返回AI匹配的小组推荐列表"
+  }
+]

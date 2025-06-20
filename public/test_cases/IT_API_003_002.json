@@ -1,0 +1,50 @@
+[
+  {
+    "desc": "volume为负数，期望400，提示容量不能为负",
+    "method": "POST",
+    "url": "/api/groups",
+    "headers": {},
+    "token_type": "valid",
+    "body": {
+      "name": "GroupA",
+      "description": "desc1",
+      "volume": -5,
+      "visibility": 1,
+      "approvalRequired": 0
+    },
+    "expected_status": 400,
+    "expected_message": "容量不能为负"
+  },
+  {
+    "desc": "visibility非法值3，期望400，提示可见性应为true/false",
+    "method": "POST",
+    "url": "/api/groups",
+    "headers": {},
+    "token_type": "valid",
+    "body": {
+      "name": "GroupA",
+      "description": "desc1",
+      "volume": 10,
+      "visibility": 3,
+      "approvalRequired": 0
+    },
+    "expected_status": 400,
+    "expected_message": "可见性应为true/false"
+  },
+  {
+    "desc": "approvalRequired非法值2，期望400，提示是否需要批准应为true/false",
+    "method": "POST",
+    "url": "/api/groups",
+    "headers": {},
+    "token_type": "valid",
+    "body": {
+      "name": "GroupA",
+      "description": "desc1",
+      "volume": 10,
+      "visibility": 1,
+      "approvalRequired": 2
+    },
+    "expected_status": 400,
+    "expected_message": "是否需要批准应为true/false"
+  }
+]

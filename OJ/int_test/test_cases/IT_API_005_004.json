@@ -1,0 +1,12 @@
+[
+  {
+    "desc": "发起用户和目标成员都在组内，期望200，返回目标成员完整个人信息",
+    "method": "GET",
+    "url": "/api/groups/2/2",
+    "headers": {},
+    "token_type": "valid",
+    "user_id": 4,
+    "expected_status": 200,
+    "expected_message": "返回目标成员完整个人信息"
+  }
+]

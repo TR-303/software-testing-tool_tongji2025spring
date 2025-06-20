@@ -7,6 +7,7 @@ import Calender from "@/views/practice/Calender.vue";
 import SystemTest from "@/views/project/SystemTest.vue";
 import BackendTests from "@/views/project/BackendTests.vue";
 import ComputerSales from '../views/practice/ComputerSales.vue';
+import IntegrationTest from '../views/project/IntegrationTest.vue';
 
 const routes = [
     {
@@ -53,6 +54,11 @@ const routes = [
                 path: "unit",
                 name: "单元测试",
                 component: BackendTests
+            },
+            {
+                path: "integration",
+                name: "集成测试",
+                component: IntegrationTest
             },
             {
                 path: "systest",

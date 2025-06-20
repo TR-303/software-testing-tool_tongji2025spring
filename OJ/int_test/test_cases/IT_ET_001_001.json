@@ -1,0 +1,12 @@
+[
+  {
+    "desc": "无可用组，AI无法推荐，期望提示无法推荐小组",
+    "method": "POST",
+    "url": "/api/groups/match",
+    "headers": {},
+    "token_type": "valid",
+    "user_id": 1,
+    "expected_status": 200,
+    "expected_message": "无法推荐小组"
+  }
+]

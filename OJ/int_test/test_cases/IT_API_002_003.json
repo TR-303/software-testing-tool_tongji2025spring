@@ -1,0 +1,77 @@
+[
+  {
+    "desc": "组合条件：keyword=test, maxVolume=100, minVolume=1, createdBefore=2024-12-31, createdAfter=2023-01-01",
+    "method": "POST",
+    "url": "/api/groups/filter",
+    "headers": {},
+    "token_type": "valid",
+    "body": {
+      "keyword": "test",
+      "maxVolume": 100,
+      "minVolume": 1,
+      "createdBefore": "2024-12-31",
+      "createdAfter": "2023-01-01"
+    },
+    "expected_status": 200
+  },
+  {
+    "desc": "仅maxVolume=5，返回容量<=5的组",
+    "method": "POST",
+    "url": "/api/groups/filter",
+    "headers": {},
+    "token_type": "valid",
+    "body": {
+      "keyword": null,
+      "maxVolume": 5,
+      "minVolume": null,
+      "createdBefore": null,
+      "createdAfter": null
+    },
+    "expected_status": 200
+  },
+  {
+    "desc": "仅minVolume=5，返回容量>=5的组",
+    "method": "POST",
+    "url": "/api/groups/filter",
+    "headers": {},
+    "token_type": "valid",
+    "body": {
+      "keyword": null,
+      "maxVolume": null,
+      "minVolume": 5,
+      "createdBefore": null,
+      "createdAfter": null
+    },
+    "expected_status": 200
+  },
+  {
+    "desc": "仅createdBefore=2024-01-01，返回创建时间早于2024-01-01的组",
+    "method": "POST",
+    "url": "/api/groups/filter",
+    "headers": {},
+    "token_type": "valid",
+    "body": {
+      "keyword": null,
+      "maxVolume": null,
+      "minVolume": null,
+      "createdBefore": "2024-01-01",
+      "createdAfter": null
+    },
+    "expected_status": 200
+  },
+  {
+    "desc": "仅createdAfter=2023-01-01，返回创建时间晚于2023-01-01的组",
+    "method": "POST",
+    "url": "/api/groups/filter",
+    "headers": {},
+    "token_type": "valid",
+    "body": {
+      "keyword": null,
+      "maxVolume": null,
+      "minVolume": null,
+      "createdBefore": null,
+      "createdAfter": "2023-01-01"
+    },
+    "expected_status": 200
+  }
+]

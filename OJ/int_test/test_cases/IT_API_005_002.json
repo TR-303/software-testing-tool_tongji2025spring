@@ -1,0 +1,12 @@
+[
+  {
+    "desc": "发起用户不在组内，期望400，提示当前用户不在该组内",
+    "method": "GET",
+    "url": "/api/groups/1/2",
+    "headers": {},
+    "token_type": "valid",
+    "user_id": 4,
+    "expected_status": 400,
+    "expected_message": "当前用户不在该组内"
+  }
+]

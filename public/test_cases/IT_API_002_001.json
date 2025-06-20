@@ -1,0 +1,19 @@
+[
+  {
+    "desc": "不加限制条件，返回全部组",
+    "method": "POST",
+    "url": "/api/groups/filter",
+    "headers": {},
+    "token_type": "valid",
+    "user_id": 1,
+    "body": {
+      "keyword": null,
+      "maxVolume": null,
+      "minVolume": null,
+      "createdBefore": null,
+      "createdAfter": null
+    },
+    "expected_status": 200,
+    "expected_message": "返回全部组"
+  }
+]

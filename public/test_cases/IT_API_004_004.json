@@ -1,0 +1,15 @@
+[
+  {
+    "desc": "目标组可加入，description非空，期望200，申请提交成功",
+    "method": "POST",
+    "url": "/api/groups/2/apply",
+    "headers": {},
+    "token_type": "valid",
+    "user_id": 1,
+    "body": {
+      "description": "希望加入贵组"
+    },
+    "expected_status": 200,
+    "expected_message": "已发送加入请求"
+  }
+]

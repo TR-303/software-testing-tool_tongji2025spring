@@ -1,0 +1,15 @@
+[
+  {
+    "desc": "用户已在组内，重复申请，期望400，提示你已在组内",
+    "method": "POST",
+    "url": "/api/groups/1/apply",
+    "headers": {},
+    "token_type": "valid",
+    "user_id": 1,
+    "body": {
+      "description": "申请加入"
+    },
+    "expected_status": 400,
+    "expected_message": "你已在组内"
+  }
+]

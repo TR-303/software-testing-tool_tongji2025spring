@@ -1,0 +1,35 @@
+{
+  "Leader1": {
+    "id": 1,
+    "username": "Leader1",
+    "password": "pswd_l1",
+    "encodedPassword": "$2a$10$OOQjDFwZweb3FWinJIj7GuWA1pzJ6yYGSTxruGUMBSKpAh23I8tNS",
+    "token": "eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjEsImV4cCI6NDYxMTY4Nzc2ODgzMzE4NH0.4HsW666r3TDORj-bhZDIcaEG3qwOro_nXPM2oYgfJQNL5cTJWeAvTiuXym4w-GPUaSHM52T6mybW_6vTD8gWaQ"
+  },
+  "Member1": {
+    "id": 2,
+    "username": "Member1",
+    "password": "pswd_m1",
+    "encodedPassword": "$2a$10$QL/jM2mw13fcYuo8qi4lkOu4DeYorM3NDZPa1MQ3HuY2xjNSlCIX2",
+    "token": "eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjIsImV4cCI6NDYxMTY4Nzc2ODgzMzIwNX0.gK4Xbijz_u0kNXz0TBWLQxoII390Kry_Pf7HXYbb-TqUjm9wGRgy8ej3AVfq80ivwT9dgjkDqy2XIrf6xqgfEw"
+  },
+  "Member2": {
+    "id": 3,
+    "username": "Member2",
+    "password": "pswd_m2",
+    "encodedPassword": "$2a$10$wrh1rbzPXriCiJYuzi01K.1YT4qA9LNW6.MFHpSFO7QsKa5medLJK",
+    "token": "eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjMsImV4cCI6NDYxMTY4Nzc2ODgzMzIxOH0.mKrDm1w0L-0yBHpl2gkVjaWORSMHrHTyoPu0pg-7gQsR6qTi7DKz2D-JMkrAwRhZPuECB3YS8452dd2P7JMgMw"
+  },
+  "Member3": {
+    "id": 4,
+    "username": "Member3",
+    "password": "pswd_m3",
+    "encodedPassword": "$2a$10$Yjn3zlfza25Iqgj2hl7U5.vJMdoaYaV48twgp4DvcTSvFOs.ePj0W",
+    "token": "eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjQsImV4cCI6NDYxMTY4Nzc2ODgzMzIzNH0.p8pvJtXE71lUdRD4_dso7EGdSqexyGyN7xIIsnPptUjm7CHmlQszv1WW0NVwOT7H5-L3e793XvksWo01ANaYww"
+  },
+  "Member4": {
+    "id": 5,
+    "username": "Member4",
+    "encodedPassword": "does_not_matter"
+  }
+}
