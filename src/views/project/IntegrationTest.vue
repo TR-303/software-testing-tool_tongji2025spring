@@ -58,7 +58,7 @@ const apiDocs = {
       'group_id: 目标组ID',
       'description: 申请描述'
     ],
-    returns: '200: 申请成功, 400: 参数错误, 403: 权限错误',
+    returns: '200: 申请成功, 400: 参数错误',
     notes: '不能重复申请已加入的组。description 不能为空。'
   },
   'IT_API_005': {
@@ -68,14 +68,14 @@ const apiDocs = {
       'group_id: 组ID',
       'member_id: 目标成员ID'
     ],
-    returns: '200: 返回成员信息, 403: 权限错误, 404: 成员不存在',
+    returns: '200: 返回成员信息, 400: 参数错误',
     notes: '必须是同组成员才能查看。'
   },
   'IT_API_006': {
     title: 'DELETE /api/groups/{group_id}',
     desc: '解散小组',
     params: ['group_id: 目标组ID'],
-    returns: '200: 解散成功, 400: 参数错误, 403: 权限错误',
+    returns: '200: 解散成功, 400: 参数错误',
     notes: '仅组长可以解散小组。解散后数据不可恢复。'
   },
   // 'IT_ET_001': {
