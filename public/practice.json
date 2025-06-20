@@ -17,11 +17,14 @@
         "method": "基本边界值",
         "testcases": "triangle_basic_boundary.csv"
       },
-            {
+      {
         "method": "健壮边界值",
         "testcases": "triangle_robust_boundary.csv"
-      }
-            
+      },
+      {
+        "method": "等价类划分",
+        "testcases": "triangle_equivalence.csv"
+      }  
     ]
   },
   "calender": {
@@ -105,6 +108,25 @@
             {
         "method": "条件组合覆盖",
         "testcases": "whitebox_Multiple.csv"
+      }
+    ]
+  },
+  "computer_sales": {
+    "codes": [
+      {
+        "version": "1.0",
+        "description": "首先根据用户输入的电脑型号和数量，判断输入是否越界，若输入合法则计算出总价；再根据总价范围判断佣金比例，并计算佣金。",
+        "code": "computer_sales_1.0.cpp"
+      }
+    ],
+    "tests": [
+      {
+        "method": "基本边界值-仅考虑输入变量",
+        "testcases": "computer_sales_input_only.csv"
+      },
+      {
+        "method": "基本边界值-考虑销售额边界反推输入",
+        "testcases": "computer_sales_add_output.csv"
       }
     ]
   }

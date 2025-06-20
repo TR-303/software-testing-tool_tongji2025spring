@@ -5,6 +5,7 @@ import WhiteBox from "../views/practice/WhiteBox.vue";
 import TeleFee from "../views/practice/TeleFee.vue";
 import Calender from "@/views/practice/Calender.vue";
 import BackendTests from "@/views/project/BackendTests.vue";
+import ComputerSales from '../views/practice/ComputerSales.vue';
 
 const routes = [
     {
@@ -30,6 +31,11 @@ const routes = [
                 path: "whitebox",
                 name: "白盒测试",
                 component: WhiteBox
+            },
+            {
+                path: "computer_sales",
+                name: "电脑销售系统",
+                component: ComputerSales
             },
             {
                 path: "telefee",
