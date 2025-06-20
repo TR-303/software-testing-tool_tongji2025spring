@@ -251,5 +251,255 @@ export const testCases = {
       testName: 'com.tongji.chaigrouping.service.JoinRequestServiceImplTest.testRespondToRequestInvalidAction'
     }
   ],
-  Task: []
+  Task: [
+    // createTask test cases
+    {
+      id: 'UT_TC_003_001_001',
+      tag: 'createTask',
+      desc: '输入groupId为null，任务创建失败',
+      input: 'groupId=null, taskCreationDto={description:"测试任务"}',
+      expected: '任务创建失败',
+      testName: 'com.tongji.chaigrouping.service.TaskCreationServiceTest.testCreateTask_GroupIdNull'
+    },
+    {
+      id: 'UT_TC_003_001_002',
+      tag: 'createTask',
+      desc: '输入有效groupId，不分配任务给用户',
+      input: 'groupId=1, taskCreationDto={assigneeId:null}',
+      expected: '任务创建成功',
+      testName: 'com.tongji.chaigrouping.service.TaskCreationServiceTest.testCreateTask_ValidGroupId_NoAssignee_DescriptionNull'
+    },
+    {
+      id: 'UT_TC_003_001_003',
+      tag: 'createTask',
+      desc: '输入有效groupId，分配任务给用户',
+      input: 'groupId=1, taskCreationDto={assigneeId:10}',
+      expected: '任务创建成功',
+      testName: 'com.tongji.chaigrouping.service.TaskCreationServiceTest.testCreateTask_WithAssignee_OnlyId'
+    },
+    {
+      id: 'UT_TC_003_001_004',
+      tag: 'createTask',
+      desc: '输入无效groupId（不存在）',
+      input: 'groupId=999, taskCreationDto={assigneeId:10}',
+      expected: '任务创建失败',
+      testName: 'com.tongji.chaigrouping.service.TaskCreationServiceTest.testCreateTask_InvalidGroupId_NotFound_999'
+    },
+
+    // getUserTaskList test cases
+    {
+      id: 'UT_TC_002_002_001',
+      tag: 'getUserTaskList',
+      desc: '输入用户ID为null',
+      input: 'userId=null',
+      expected: '返回空列表',
+      testName: 'com.tongji.chaigrouping.service.UserTaskManagementServiceTest.testGetUserTaskList_WithNullUserId'
+    },
+    {
+      id: 'UT_TC_002_002_002',
+      tag: 'getUserTaskList',
+      desc: '输入用户ID为非正整数（如-1）',
+      input: 'userId=-1',
+      expected: '返回空列表',
+      testName: 'com.tongji.chaigrouping.service.UserTaskManagementServiceTest.testGetUserTaskList_WithInvalidUserId'
+    },
+    {
+      id: 'UT_TC_002_002_003',
+      tag: 'getUserTaskList',
+      desc: '输入有效用户ID但用户无任务',
+      input: 'userId=100',
+      expected: '返回空列表',
+      testName: 'com.tongji.chaigrouping.service.UserTaskManagementServiceTest.testGetUserTaskList_UserWithNoTasks'
+    },
+    {
+      id: 'UT_TC_002_002_009',
+      tag: 'getUserTaskList',
+      desc: '验证返回的任务列表包含正确的任务信息',
+      input: 'userId=6',
+      expected: '返回包含正确任务信息的列表',
+      testName: 'com.tongji.chaigrouping.service.UserTaskManagementServiceTest.testGetUserTaskList_WithValidUserId'
+    },
+
+    // getTaskList test cases
+    {
+      id: 'UT_TC_003_003_001',
+      tag: 'getTaskList',
+      desc: '输入groupId为null',
+      input: 'groupId=null',
+      expected: '返回空列表或抛出异常',
+      testName: 'com.tongji.chaigrouping.service.GroupTaskManagementServiceTest.testGetTaskList_GroupIdIsNull'
+    },
+    {
+      id: 'UT_TC_003_003_002',
+      tag: 'getTaskList',
+      desc: '输入groupId在数据库中不存在',
+      input: 'groupId=999',
+      expected: '返回空列表',
+      testName: 'com.tongji.chaigrouping.service.GroupTaskManagementServiceTest.testGetTaskList_GroupIdNotExist'
+    },
+    {
+      id: 'UT_TC_003_003_003',
+      tag: 'getTaskList',
+      desc: '输入groupId存在但对应任务列表为空',
+      input: 'groupId=1',
+      expected: '返回空列表',
+      testName: 'com.tongji.chaigrouping.service.GroupTaskManagementServiceTest.testGetTaskList_EmptyListForExistingGroup'
+    },
+    {
+      id: 'UT_TC_003_003_004',
+      tag: 'getTaskList',
+      desc: '输入groupId存在且对应任务列表不为空',
+      input: 'groupId=2',
+      expected: '返回任务列表',
+      testName: 'com.tongji.chaigrouping.service.GroupTaskManagementServiceTest.testGetTaskList_NonEmptyListForExistingGroup'
+    },
+    {
+      id: 'UT_TC_003_003_005',
+      tag: 'getTaskList',
+      desc: '输入groupId为负数或非法值',
+      input: 'groupId=-1',
+      expected: '返回空列表或抛出异常',
+      testName: 'com.tongji.chaigrouping.service.GroupTaskManagementServiceTest.testGetTaskList_InvalidNegativeGroupId'
+    },
+
+    // reassignTask test cases
+    {
+      id: 'UT_TC_003_004_001',
+      tag: 'reassignTask',
+      desc: '输入taskId为null',
+      input: 'taskId=null, assigneeId=1',
+      expected: '抛出异常',
+      testName: 'com.tongji.chaigrouping.service.TaskReassignmentServiceTest.testReassignTask_TaskIdIsNull'
+    },
+    {
+      id: 'UT_TC_003_004_002',
+      tag: 'reassignTask',
+      desc: '输入assigneeId为null',
+      input: 'taskId=1, assigneeId=null',
+      expected: '抛出异常',
+      testName: 'com.tongji.chaigrouping.service.TaskReassignmentServiceTest.testReassignTask_AssigneeIdIsNull'
+    },
+    {
+      id: 'UT_TC_003_004_003',
+      tag: 'reassignTask',
+      desc: '输入taskId在数据库中不存在',
+      input: 'taskId=999, assigneeId=1',
+      expected: '抛出异常',
+      testName: 'com.tongji.chaigrouping.service.TaskReassignmentServiceTest.testReassignTask_TaskIdDoesNotExist'
+    },
+    {
+      id: 'UT_TC_003_004_004',
+      tag: 'reassignTask',
+      desc: '输入assigneeId在数据库中不存在',
+      input: 'taskId=1, assigneeId=999',
+      expected: '抛出异常',
+      testName: 'com.tongji.chaigrouping.service.TaskReassignmentServiceTest.testReassignTask_AssigneeIdDoesNotExist'
+    },
+    {
+      id: 'UT_TC_003_004_005',
+      tag: 'reassignTask',
+      desc: '输入taskId和assigneeId均存在',
+      input: 'taskId=1, assigneeId=2',
+      expected: '任务重新分配成功',
+      testName: 'com.tongji.chaigrouping.service.TaskReassignmentServiceTest.testReassignTask_ValidTaskIdAndAssigneeId'
+    },
+    {
+      id: 'UT_TC_003_004_006',
+      tag: 'reassignTask',
+      desc: '输入taskId或assigneeId为非法值',
+      input: 'taskId=-1, assigneeId=2',
+      expected: '抛出异常',
+      testName: 'com.tongji.chaigrouping.service.TaskReassignmentServiceTest.testReassignTask_InvalidTaskIdAndAssigneeId'
+    },
+    {
+      id: 'UT_TC_003_004_007',
+      tag: 'reassignTask',
+      desc: '输入taskId存在但任务状态不允许重新分配',
+      input: 'taskId=1, assigneeId=2',
+      expected: '抛出异常',
+      testName: 'com.tongji.chaigrouping.service.TaskReassignmentServiceTest.testReassignTask_TaskStatusNotAllowReassign'
+    },
+
+    // getTaskDetail test cases
+    {
+      id: 'UT_TC_003_005_001',
+      tag: 'getTaskDetail',
+      desc: '输入taskId为null',
+      input: 'taskId=null',
+      expected: '抛出IllegalArgumentException',
+      testName: 'com.tongji.chaigrouping.service.TaskDetailServiceTest.testGetTaskDetail_TaskIdIsNull'
+    },
+    {
+      id: 'UT_TC_003_005_002',
+      tag: 'getTaskDetail',
+      desc: '输入taskId为非正整数（如-1）',
+      input: 'taskId=-1',
+      expected: '抛出IllegalArgumentException',
+      testName: 'com.tongji.chaigrouping.service.TaskDetailServiceTest.testGetTaskDetail_InvalidTaskId'
+    },
+    {
+      id: 'UT_TC_003_005_003',
+      tag: 'getTaskDetail',
+      desc: '输入taskId不存在',
+      input: 'taskId=999',
+      expected: '返回null',
+      testName: 'com.tongji.chaigrouping.service.TaskDetailServiceTest.testGetTaskDetail_TaskIdDoesNotExist'
+    },
+    {
+      id: 'UT_TC_003_005_004',
+      tag: 'getTaskDetail',
+      desc: '输入taskId存在但无提交记录',
+      input: 'taskId=1',
+      expected: '返回TaskDetailDto对象，submission相关字段为null',
+      testName: 'com.tongji.chaigrouping.service.TaskDetailServiceTest.testGetTaskDetail_NoSubmission'
+    },
+    {
+      id: 'UT_TC_003_005_005',
+      tag: 'getTaskDetail',
+      desc: '输入taskId存在且有提交记录',
+      input: 'taskId=2',
+      expected: '返回完整的TaskDetailDto对象，包含所有字段信息',
+      testName: 'com.tongji.chaigrouping.service.TaskDetailServiceTest.testGetTaskDetail_WithSubmission'
+    },
+    {
+      id: 'UT_TC_003_005_006',
+      tag: 'getTaskDetail',
+      desc: '验证返回的任务详情包含正确的任务基本信息',
+      input: 'taskId=3',
+      expected: '返回的TaskDetailDto包含正确的task_id, title, description, deadline, state',
+      testName: 'com.tongji.chaigrouping.service.TaskDetailServiceTest.testGetTaskDetail_TaskBasicInfo'
+    },
+    {
+      id: 'UT_TC_003_005_007',
+      tag: 'getTaskDetail',
+      desc: '验证返回的任务详情包含正确的小组信息',
+      input: 'taskId=4',
+      expected: '返回的TaskDetailDto包含正确的group_id和group_name',
+      testName: 'com.tongji.chaigrouping.service.TaskDetailServiceTest.testGetTaskDetail_GroupInfo'
+    },
+    {
+      id: 'UT_TC_003_005_008',
+      tag: 'getTaskDetail',
+      desc: '验证返回的任务详情包含正确的用户信息',
+      input: 'taskId=5',
+      expected: '返回的TaskDetailDto包含正确的user_id和username',
+      testName: 'com.tongji.chaigrouping.service.TaskDetailServiceTest.testGetTaskDetail_UserInfo'
+    },
+    {
+      id: 'UT_TC_003_005_009',
+      tag: 'getTaskDetail',
+      desc: '验证返回的任务详情包含正确的提交信息',
+      input: 'taskId=6',
+      expected: '返回的TaskDetailDto包含正确的submission_id, file_name, text, submission_username',
+      testName: 'com.tongji.chaigrouping.service.TaskDetailServiceTest.testGetTaskDetail_SubmissionInfo'
+    },
+    {
+      id: 'UT_TC_003_005_010',
+      tag: 'getTaskDetail',
+      desc: '验证无提交记录时相关字段为null',
+      input: 'taskId=7',
+      expected: '返回的TaskDetailDto的submission相关字段为null',
+      testName: 'com.tongji.chaigrouping.service.TaskDetailServiceTest.testGetTaskDetail_NoSubmissionInfo'
+    }
+  ]
 };
