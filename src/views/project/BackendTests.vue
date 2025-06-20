@@ -13,7 +13,17 @@ const failed = ref([]);
 
 const tabs = ['User类', 'JoinRequest类', 'Task类'];
 const selectedTab = ref(tabs[0]);
+const selectedTag = ref('');
 const cases = reactive(JSON.parse(JSON.stringify(testCases)));
+
+const tagList = computed(() => {
+  const list = cases[selectedTab.value] || [];
+  return [...new Set(list.map(tc => tc.tag))];
+});
+
+watch(selectedTab, () => {
+  selectedTag.value = tagList.value[0] || '';
+}, { immediate: true });
 
 const chartData = ref({
   labels: ['\u901a\u8fc7', '\u5931\u8d25'],
@@ -42,7 +52,11 @@ watch([passed, failed], () => {
   }
 });
 
-const currentCases = computed(() => cases[selectedTab.value] || []);
+const currentCases = computed(() => {
+  let list = cases[selectedTab.value] || [];
+  if (selectedTag.value) list = list.filter(tc => tc.tag === selectedTag.value);
+  return list;
+});
 
 async function run() {
   running.value = true;
@@ -82,11 +96,24 @@ async function run() {
       </button>
     </div>
 
+    <div class="border-b flex space-x-2 mt-2" v-if="tagList.length">
+      <button
+        v-for="tag in tagList"
+        :key="tag"
+        @click="selectedTag = tag"
+        class="px-3 py-1"
+        :class="selectedTag === tag ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500'"
+      >
+        {{ tag }}
+      </button>
+    </div>
+
     <div class="overflow-x-auto">
       <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
           <tr>
             <th class="px-3 py-2">标识</th>
+            <th class="px-3 py-2">测试项描述</th>
             <th class="px-3 py-2">输入</th>
             <th class="px-3 py-2">期望输出</th>
             <th class="px-3 py-2">Pass</th>
@@ -95,6 +122,7 @@ async function run() {
         <tbody v-if="currentCases.length" class="bg-white divide-y divide-gray-200">
           <tr v-for="c in currentCases" :key="c.id">
             <td class="px-3 py-2">{{ c.id }}</td>
+            <td class="px-3 py-2 whitespace-pre-wrap">{{ c.desc }}</td>
             <td class="px-3 py-2 whitespace-pre-wrap">{{ c.input }}</td>
             <td class="px-3 py-2 whitespace-pre-wrap">{{ c.expected }}</td>
             <td class="px-3 py-2 text-center">
@@ -105,7 +133,7 @@ async function run() {
         </tbody>
         <tbody v-else>
           <tr>
-            <td colspan="4" class="text-center py-4 text-gray-500">暂无测试用例</td>
+            <td colspan="5" class="text-center py-4 text-gray-500">暂无测试用例</td>
           </tr>
         </tbody>
       </table>
