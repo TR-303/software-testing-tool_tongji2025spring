@@ -50,15 +50,16 @@ const routes = [
         name: "项目测试",
         children: [
             {
-                path:"systest",
-                name: "系统测试",
-                component: SystemTest
-            },
-            {
                 path: "unit",
                 name: "单元测试",
                 component: BackendTests
+            },
+            {
+                path: "systest",
+                name: "系统测试",
+                component: SystemTest
             }
+
         ]
     }
 ];

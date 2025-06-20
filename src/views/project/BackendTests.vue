@@ -30,11 +30,11 @@ watch(selectedTab, () => {
 }, { immediate: true });
 
 const chartData = ref({
-  labels: ['\u901a\u8fc7', '\u5931\u8d25'],
+  labels: ['通过', '失败'],
   datasets: [
     {
       data: [0, 0],
-      backgroundColor: ['#4CAF50', '#F44336'],
+      backgroundColor: ['#16a34a', '#dc2626'],
       borderWidth: 0
     }
   ]
@@ -82,90 +82,113 @@ async function run() {
 </script>
 
 <template>
-  <div class="p-6 space-y-4">
-    <button @click="run" :disabled="running" class="px-4 py-2 bg-blue-500 text-white rounded">
+  <div class="mb-8 p-8 bg-white rounded-lg">
+    <h1 class="text-3xl font-bold text-gray-900 mb-4 border-l-4 border-blue-500 pl-4">单元测试</h1>
+    <div class="text-base text-gray-700 pl-6">
+      单元测试用于验证各个模块的功能正确性。<br>
+      请选择需要查看的类和标签，点击右上角按钮运行所有单元测试。<br>
+    </div>
+  </div>
+  <div class="flex justify-end items-center px-10 gap-4 mb-4">
+    <button
+      @click="run"
+      :disabled="running"
+      class="flex items-center px-4 py-2 bg-black text-white rounded transition-colors duration-150 hover:bg-gray-800 active:bg-gray-900 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      <svg class="w-3 h-3 mr-2" fill="currentColor" viewBox="0 0 20 20">
+        <polygon points="4,3 16,10 4,17"/>
+      </svg>
       {{ running ? '运行中...' : '运行单元测试' }}
     </button>
-    <pre class="bg-gray-100 p-4 whitespace-pre-wrap">{{ output }}</pre>
+  </div>
 
-    <div class="border-b flex space-x-2">
-      <button
-        v-for="tab in tabs"
-        :key="tab.key"
-        @click="selectedTab = tab"
-        class="px-4 py-2"
-        :class="selectedTab === tab ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500'"
-      >
-        {{ tab.label }}
-      </button>
+  <div class="border-b flex space-x-2 px-10">
+    <button
+      v-for="tab in tabs"
+      :key="tab.key"
+      @click="selectedTab = tab"
+      class="px-4 py-2 text-sm font-medium transition-colors duration-150"
+      :class="selectedTab === tab ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500 hover:text-blue-500'"
+    >
+      {{ tab.label }}
+    </button>
+  </div>
+
+  <div class="border-b flex space-x-2 mt-2 px-10" v-if="tagList.length">
+    <button
+      v-for="tag in tagList"
+      :key="tag"
+      @click="selectedTag = tag"
+      class="px-3 py-1 text-sm font-medium transition-colors duration-150"
+      :class="selectedTag === tag ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500 hover:text-blue-500'"
+    >
+      {{ tag }}
+    </button>
+  </div>
+
+  <div class="overflow-x-auto p-10">
+    <table class="min-w-full border-separate border-spacing-y-1 text-sm">
+      <thead>
+        <tr>
+          <th class="text-left font-semibold text-gray-700 px-4 py-2 bg-gray-50">ID</th>
+          <th class="text-left font-semibold text-gray-700 px-4 py-2 bg-gray-50">标识</th>
+          <th class="text-left font-semibold text-gray-700 px-4 py-2 bg-gray-50">测试项描述</th>
+          <th class="text-left font-semibold text-gray-700 px-4 py-2 bg-gray-50">输入</th>
+          <th class="text-left font-semibold text-gray-700 px-4 py-2 bg-gray-50">期望输出</th>
+          <th class="text-left font-semibold text-gray-700 px-4 py-2 bg-gray-50">通过</th>
+        </tr>
+      </thead>
+      <tbody v-if="currentCases.length">
+        <tr v-for="(c, idx) in currentCases" :key="c.id" class="even:bg-gray-50 hover:bg-gray-100 transition-colors">
+          <td class="px-4 py-2 text-gray-800 whitespace-nowrap">{{ idx + 1 }}</td>
+          <td class="px-4 py-2 text-gray-800 whitespace-nowrap">{{ c.id }}</td>
+          <td class="px-4 py-2 whitespace-pre-wrap text-gray-800">{{ c.desc }}</td>
+          <td class="px-4 py-2 whitespace-pre-wrap text-gray-800">{{ c.input }}</td>
+          <td class="px-4 py-2 whitespace-pre-wrap text-gray-800">{{ c.expected }}</td>
+          <td class="px-4 py-2 text-center">
+            <span v-if="c.status === true" class="inline-flex items-center text-green-600 font-bold">
+              <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
+            </span>
+            <span v-else-if="c.status === false" class="inline-flex items-center text-red-600 font-bold">
+              <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </span>
+            <span v-else class="text-gray-500">-</span>
+          </td>
+        </tr>
+      </tbody>
+      <tbody v-else>
+        <tr>
+          <td colspan="6" class="text-center py-6 text-gray-400">暂无测试用例</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div v-if="passed.length || failed.length" class="bg-gray-50 p-6 rounded-lg w-full p-10 mx-auto">
+    <h3 class="font-semibold mb-2 text-lg">测试结果</h3>
+    <div v-if="passed.length">
+      <div class="font-medium text-green-700">通过的测试：</div>
+      <ul class="list-disc pl-6">
+        <li v-for="p in passed" :key="p">{{ p }}</li>
+      </ul>
     </div>
-
-    <div class="border-b flex space-x-2 mt-2" v-if="tagList.length">
-      <button
-        v-for="tag in tagList"
-        :key="tag"
-        @click="selectedTag = tag"
-        class="px-3 py-1"
-        :class="selectedTag === tag ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500'"
-      >
-        {{ tag }}
-      </button>
+    <div v-if="failed.length" class="mt-2">
+      <div class="font-medium text-red-700">失败的测试：</div>
+      <ul class="list-disc pl-6">
+        <li v-for="f in failed" :key="f">{{ f }}</li>
+      </ul>
     </div>
-
-    <div class="overflow-x-auto">
-      <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-gray-50">
-          <tr>
-            <th class="px-3 py-2">标识</th>
-            <th class="px-3 py-2">测试项描述</th>
-            <th class="px-3 py-2">输入</th>
-            <th class="px-3 py-2">期望输出</th>
-            <th class="px-3 py-2">Pass</th>
-          </tr>
-        </thead>
-        <tbody v-if="currentCases.length" class="bg-white divide-y divide-gray-200">
-          <tr v-for="c in currentCases" :key="c.id">
-            <td class="px-3 py-2">{{ c.id }}</td>
-            <td class="px-3 py-2 whitespace-pre-wrap">{{ c.desc }}</td>
-            <td class="px-3 py-2 whitespace-pre-wrap">{{ c.input }}</td>
-            <td class="px-3 py-2 whitespace-pre-wrap">{{ c.expected }}</td>
-            <td class="px-3 py-2 text-center">
-              <span v-if="c.status === true" class="text-green-600">✔️</span>
-              <span v-else-if="c.status === false" class="text-red-600">❌</span>
-            </td>
-          </tr>
-        </tbody>
-        <tbody v-else>
-          <tr>
-            <td colspan="5" class="text-center py-4 text-gray-500">暂无测试用例</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="mt-2 font-semibold">
+      共 {{ passed.length + failed.length }} 项测试，{{ passed.length }} 通过，{{ failed.length }} 失败
     </div>
-
-    <div v-if="passed.length || failed.length" class="bg-gray-100 p-4 whitespace-pre-wrap">
-      <h3 class="font-semibold mb-2">测试结果</h3>
-      <div v-if="passed.length">
-        <div class="font-medium text-green-700">通过的测试：</div>
-        <ul class="list-disc pl-6">
-          <li v-for="p in passed" :key="p">{{ p }}</li>
-        </ul>
-      </div>
-      <div v-if="failed.length" class="mt-2">
-        <div class="font-medium text-red-700">失败的测试：</div>
-        <ul class="list-disc pl-6">
-          <li v-for="f in failed" :key="f">{{ f }}</li>
-        </ul>
-      </div>
-      <div class="mt-2 font-semibold">
-        共 {{ passed.length + failed.length }} 项测试，{{ passed.length }} 通过，{{ failed.length }} 失败
-      </div>
-      <div class="p-4 flex justify-center">
-        <div class="relative w-full max-w-xs sm:max-w-sm md:max-w-md h-64">
-          <Pie :data="chartData" :options="chartOptions" />
-        </div>
+    <div class="p-4 flex justify-center">
+      <div class="relative w-full max-w-xs sm:max-w-sm md:max-w-md h-64">
+        <Pie :data="chartData" :options="chartOptions" />
       </div>
     </div>
   </div>
 </template>
-
