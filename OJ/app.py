@@ -1,9 +1,10 @@
 import os
+import re
 import subprocess
 import tempfile
 import traceback
 import xml.etree.ElementTree as ET
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response, stream_with_context
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -59,12 +60,12 @@ def run_cpp():
                     'error': 'Compilation failed',
                     'message': compile_result.stderr
                 }), 400
-            
+
             for input in inputs:
                 if not input.strip():
                     print("shouldn't reach here 输入有空行！")
                     continue
-                
+
                 # 运行
                 process = subprocess.run(
                     exe_file,
@@ -80,7 +81,7 @@ def run_cpp():
                         'error': 'Runtime error',
                         'message': process.stderr.decode('utf-8', errors='replace')
                     }), 400
-            
+
                 outputs.append(process.stdout.decode('utf-8', errors='replace').rstrip('\r\n'))
 
             return jsonify({
@@ -151,6 +152,69 @@ def run_tests():
         app.logger.error("运行测试时报错:\n" + traceback.format_exc())
         return jsonify({'error': str(e)}), 500
 
+
+
+@app.route('/run_systest', methods=['GET'])
+def run_systest():
+    headed = request.args.get('headed', 'false').lower() == 'true'
+
+    cwd = "D:/data/code/chai-grouping-frontend"
+    project_path = os.path.join(cwd, "cypress-sys")
+
+    command = [
+        "npx", "cypress", "run",
+        "--project", cwd,
+        "--config-file", os.path.join(project_path, "cypress.config.js"),
+        "--spec", os.path.join(project_path, "e2e/*.cy.js"),
+        "--reporter", "spec"
+    ]
+
+    if headed:
+        command.append("--headed")
+
+    def generate():
+        env = os.environ.copy()
+        env['PYTHONIOENCODING'] = 'utf-8'
+
+        process = subprocess.Popen(
+            command,
+            cwd=cwd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            encoding='utf-8',
+            env=env,
+            shell=True
+        )
+
+        current_case = None
+        emitted_cases = {}
+
+        for line in iter(process.stdout.readline, ''):
+            line = line.strip()
+            print("[Cypress]", line)
+
+            # 匹配测试用例标题行（行首 + 空格 + "-"）
+            match_case = re.match(r"^([A-Za-z0-9_]+)\s+-\s+.*$", line)
+            if match_case:
+                current_case = match_case.group(1)
+                continue
+
+            # 匹配通过（✓ 开头）
+            if line.startswith("√ ") and current_case and current_case not in emitted_cases:
+                emitted_cases[current_case] = "PASSED"
+                yield f"data: [{current_case}] PASSED\n\n"
+                continue
+
+            # 匹配失败（例如 "1) xxx"）
+            if re.match(r"^\d+\)", line) and current_case and current_case not in emitted_cases:
+                emitted_cases[current_case] = "FAILED"
+                yield f"data: [{current_case}] FAILED\n\n"
+                continue
+
+        process.stdout.close()
+        yield "data: [Cypress Finished]\n\n"
+
+    return Response(stream_with_context(generate()), mimetype='text/event-stream')
 
 
 if __name__ == '__main__':
