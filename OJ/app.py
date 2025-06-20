@@ -1,6 +1,7 @@
 import os
 import subprocess
 import tempfile
+import traceback
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
@@ -96,20 +97,37 @@ def run_cpp():
                 'message': f"{str(e)} (你安装g++并配置环境变量了吗？)"
             }), 500
 
-
 @app.route('/run_tests', methods=['POST'])
 def run_tests():
     try:
-        result = subprocess.run([
-            'mvn', 'test'
-        ], cwd=os.path.join(os.path.dirname(__file__), '..', '..', 'chai-grouping-backend'),
-                           stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        backend_dir = os.path.abspath(
+            os.path.join(os.path.dirname(__file__), '..', '..', 'chai-grouping-backend')
+        )
+        if not os.path.isdir(backend_dir):
+            raise FileNotFoundError(f"后端目录不存在：{backend_dir}")
+
+        # 优先使用 mvnw.cmd；如果不存在，再退回到全局 mvn
+        mvnw = os.path.join(backend_dir, 'mvnw.cmd')
+        if os.path.isfile(mvnw):
+            cmd = [mvnw, 'test']
+        else:
+            cmd = ['mvn', 'test']
+
+        result = subprocess.run(
+            cmd,
+            cwd=backend_dir,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True
+        )
         return jsonify({
             'exitCode': result.returncode,
             'output': result.stdout
         })
     except Exception as e:
+        app.logger.error("运行测试时报错:\n" + traceback.format_exc())
         return jsonify({'error': str(e)}), 500
+
 
 
 if __name__ == '__main__':
