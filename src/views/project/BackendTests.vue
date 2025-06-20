@@ -11,13 +11,17 @@ const running = ref(false);
 const passed = ref([]);
 const failed = ref([]);
 
-const tabs = ['User类', 'JoinRequest类', 'Task类'];
+const tabs = [
+  { label: 'User类', key: 'User' },
+  { label: 'JoinRequest类', key: 'JoinRequest' },
+  { label: 'Task类', key: 'Task' }
+];
 const selectedTab = ref(tabs[0]);
 const selectedTag = ref('');
 const cases = reactive(JSON.parse(JSON.stringify(testCases)));
 
 const tagList = computed(() => {
-  const list = cases[selectedTab.value] || [];
+  const list = cases[selectedTab.value.key] || [];
   return [...new Set(list.map(tc => tc.tag))];
 });
 
@@ -53,7 +57,7 @@ watch([passed, failed], () => {
 });
 
 const currentCases = computed(() => {
-  let list = cases[selectedTab.value] || [];
+  let list = cases[selectedTab.value.key] || [];
   if (selectedTag.value) list = list.filter(tc => tc.tag === selectedTag.value);
   return list;
 });
@@ -87,12 +91,12 @@ async function run() {
     <div class="border-b flex space-x-2">
       <button
         v-for="tab in tabs"
-        :key="tab"
+        :key="tab.key"
         @click="selectedTab = tab"
         class="px-4 py-2"
         :class="selectedTab === tab ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500'"
       >
-        {{ tab }}
+        {{ tab.label }}
       </button>
     </div>
 
