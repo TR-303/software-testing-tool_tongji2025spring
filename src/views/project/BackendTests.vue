@@ -1,10 +1,34 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { Pie } from 'vue-chartjs';
+import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
+
+Chart.register(ArcElement, Tooltip, Legend);
 
 const output = ref('');
 const running = ref(false);
 const passed = ref([]);
 const failed = ref([]);
+
+const chartData = ref({
+  labels: ['\u901a\u8fc7', '\u5931\u8d25'],
+  datasets: [
+    {
+      data: [0, 0],
+      backgroundColor: ['#4CAF50', '#F44336'],
+      borderWidth: 0
+    }
+  ]
+});
+
+const chartOptions = {
+  responsive: true,
+  maintainAspectRatio: false
+};
+
+watch([passed, failed], () => {
+  chartData.value.datasets[0].data = [passed.value.length, failed.value.length];
+});
 
 async function run() {
   running.value = true;
@@ -47,6 +71,11 @@ async function run() {
       </div>
       <div class="mt-2 font-semibold">
         共 {{ passed.length + failed.length }} 项测试，{{ passed.length }} 通过，{{ failed.length }} 失败
+      </div>
+      <div class="p-4 flex justify-center">
+        <div class="relative w-full max-w-xs sm:max-w-sm md:max-w-md h-64">
+          <Pie :data="chartData" :options="chartOptions" />
+        </div>
       </div>
     </div>
   </div>
