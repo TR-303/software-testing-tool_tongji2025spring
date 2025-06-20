@@ -461,45 +461,5 @@ export const testCases = {
       expected: '返回完整的TaskDetailDto对象，包含所有字段信息',
       testName: 'com.tongji.chaigrouping.service.TaskDetailServiceTest.testGetTaskDetail_WithSubmission'
     },
-    {
-      id: 'UT_TC_003_005_006',
-      tag: 'getTaskDetail',
-      desc: '验证返回的任务详情包含正确的任务基本信息',
-      input: 'taskId=3',
-      expected: '返回的TaskDetailDto包含正确的task_id, title, description, deadline, state',
-      testName: 'com.tongji.chaigrouping.service.TaskDetailServiceTest.testGetTaskDetail_TaskBasicInfo'
-    },
-    {
-      id: 'UT_TC_003_005_007',
-      tag: 'getTaskDetail',
-      desc: '验证返回的任务详情包含正确的小组信息',
-      input: 'taskId=4',
-      expected: '返回的TaskDetailDto包含正确的group_id和group_name',
-      testName: 'com.tongji.chaigrouping.service.TaskDetailServiceTest.testGetTaskDetail_GroupInfo'
-    },
-    {
-      id: 'UT_TC_003_005_008',
-      tag: 'getTaskDetail',
-      desc: '验证返回的任务详情包含正确的用户信息',
-      input: 'taskId=5',
-      expected: '返回的TaskDetailDto包含正确的user_id和username',
-      testName: 'com.tongji.chaigrouping.service.TaskDetailServiceTest.testGetTaskDetail_UserInfo'
-    },
-    {
-      id: 'UT_TC_003_005_009',
-      tag: 'getTaskDetail',
-      desc: '验证返回的任务详情包含正确的提交信息',
-      input: 'taskId=6',
-      expected: '返回的TaskDetailDto包含正确的submission_id, file_name, text, submission_username',
-      testName: 'com.tongji.chaigrouping.service.TaskDetailServiceTest.testGetTaskDetail_SubmissionInfo'
-    },
-    {
-      id: 'UT_TC_003_005_010',
-      tag: 'getTaskDetail',
-      desc: '验证无提交记录时相关字段为null',
-      input: 'taskId=7',
-      expected: '返回的TaskDetailDto的submission相关字段为null',
-      testName: 'com.tongji.chaigrouping.service.TaskDetailServiceTest.testGetTaskDetail_NoSubmissionInfo'
-    }
   ]
 };
