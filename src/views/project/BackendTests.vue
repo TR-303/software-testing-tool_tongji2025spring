@@ -1,7 +1,8 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, reactive, computed } from 'vue';
 import { Pie } from 'vue-chartjs';
 import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
+import { testCases } from '@/data/testCases';
 
 Chart.register(ArcElement, Tooltip, Legend);
 
@@ -9,6 +10,10 @@ const output = ref('');
 const running = ref(false);
 const passed = ref([]);
 const failed = ref([]);
+
+const tabs = ['User类', 'JoinRequest类', 'Task类'];
+const selectedTab = ref(tabs[0]);
+const cases = reactive(JSON.parse(JSON.stringify(testCases)));
 
 const chartData = ref({
   labels: ['\u901a\u8fc7', '\u5931\u8d25'],
@@ -28,7 +33,16 @@ const chartOptions = {
 
 watch([passed, failed], () => {
   chartData.value.datasets[0].data = [passed.value.length, failed.value.length];
+  for (const list of Object.values(cases)) {
+    list.forEach(tc => {
+      if (passed.value.includes(tc.testName)) tc.status = true;
+      else if (failed.value.includes(tc.testName)) tc.status = false;
+      else tc.status = null;
+    });
+  }
 });
+
+const currentCases = computed(() => cases[selectedTab.value] || []);
 
 async function run() {
   running.value = true;
@@ -55,6 +69,48 @@ async function run() {
       {{ running ? '运行中...' : '运行单元测试' }}
     </button>
     <pre class="bg-gray-100 p-4 whitespace-pre-wrap">{{ output }}</pre>
+
+    <div class="border-b flex space-x-2">
+      <button
+        v-for="tab in tabs"
+        :key="tab"
+        @click="selectedTab = tab"
+        class="px-4 py-2"
+        :class="selectedTab === tab ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-500'"
+      >
+        {{ tab }}
+      </button>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-3 py-2">标识</th>
+            <th class="px-3 py-2">输入</th>
+            <th class="px-3 py-2">期望输出</th>
+            <th class="px-3 py-2">Pass</th>
+          </tr>
+        </thead>
+        <tbody v-if="currentCases.length" class="bg-white divide-y divide-gray-200">
+          <tr v-for="c in currentCases" :key="c.id">
+            <td class="px-3 py-2">{{ c.id }}</td>
+            <td class="px-3 py-2 whitespace-pre-wrap">{{ c.input }}</td>
+            <td class="px-3 py-2 whitespace-pre-wrap">{{ c.expected }}</td>
+            <td class="px-3 py-2 text-center">
+              <span v-if="c.status === true" class="text-green-600">✔️</span>
+              <span v-else-if="c.status === false" class="text-red-600">❌</span>
+            </td>
+          </tr>
+        </tbody>
+        <tbody v-else>
+          <tr>
+            <td colspan="4" class="text-center py-4 text-gray-500">暂无测试用例</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <div v-if="passed.length || failed.length" class="bg-gray-100 p-4 whitespace-pre-wrap">
       <h3 class="font-semibold mb-2">测试结果</h3>
       <div v-if="passed.length">
