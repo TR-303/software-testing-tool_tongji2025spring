@@ -16,7 +16,7 @@ import PracticeMain from "@/components/practice/PracticeMain.vue";
         <li><span class="font-semibold text-green-700">输出：</span>普通三角形</li>
       </ul>
 
-      在此处可以添加更多描述。<br>
+      为了方便描述，我们假定输入为整型变量，人为划定输入上限为1000。<br>
     </div>
   </div>
   <practice-main problem-key="triangle"/>

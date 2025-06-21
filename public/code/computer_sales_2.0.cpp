@@ -10,7 +10,9 @@ int calculate_sales(int host, int monitor, int peripheral) {
 }
 
 double calculate_commission(int total_sales) {
-    if (total_sales <= 1800) {
+    if (total_sales <= 1000) {
+        return total_sales * 0.10;
+    } else if (total_sales <= 1800) {
         return total_sales * 0.15;
     } else {
         return total_sales * 0.20;
