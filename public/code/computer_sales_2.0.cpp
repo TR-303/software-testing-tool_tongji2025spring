@@ -26,13 +26,13 @@ bool handle_input(int& host, int& monitor, int& peripheral) {
     cin >> monitor >> peripheral;
 
     if (host < 0 || host > 70 || monitor < 0 || monitor > 80 || peripheral < 0 || peripheral > 90) {
-        cout << "非法输入！\n";
-        exit(1);  // 非法输入立即退出
+        cout << "销售数量非法！\n";
+        exit(0);  // 非法输入立即退出
     }
 
-    if (host == 0 && monitor == 0 && peripheral == 0) {
+    if (host == 0 || monitor == 0 || peripheral == 0) {
         cout << "应至少销售一台完整的机器！\n";
-        exit(1);  // 不构成完整设备也视为非法
+        exit(0);  // 不构成完整设备也视为非法
     }
 
     return true;

@@ -132,6 +132,10 @@
       {
         "method": "基本边界值-考虑销售额边界反推输入",
         "testcases": "computer_sales_add_output.csv"
+      },
+      {
+        "method": "考虑销售额边界反推输入-额外添加健壮",
+        "testcases": "computer_sales_add_robust.csv"
       }
     ]
   }
